@@ -3,6 +3,7 @@ import time
 import intrinio_sdk
 from intrinio_sdk.rest import ApiException
 from pprint import pprint
+import json
 
 intrinio_sdk.ApiClient().configuration.api_key['api_key'] = 'OjMwMDZjOWUwNjMzY2FlZjhlNjdkY2NkMTMzZmFhZDhj'
 
@@ -18,6 +19,10 @@ next_page = '' # str | Gets the next page of data from a previous API call (opti
 try:
   api_response = security_api.get_security_stock_prices(identifier, start_date=start_date, end_date=end_date, frequency=frequency, page_size=page_size, next_page=next_page)
   pprint(api_response)
+  f = file("Stock Info.json", "w")
+  f.write(str(json.loads(api_response)))
+  f.close()
+
 except ApiException as e:
   print("Exception when calling SecurityApi->get_security_stock_prices: %s\r\n" % e)
     
