@@ -1,35 +1,53 @@
-import os, sys, random, json, requests
+# GS Quant documentation available at:
+# https://developer.gs.com/docs/gsquant/guides/getting-started/
 
-marquee_config = {}
+import datetime, json, csv, mysql.connector
 
+from gs_quant.data import Dataset
+from gs_quant.session import GsSession, Environment
+
+info = {}
 with open('marquee_config.json', "r") as file:
-    marquee_config = json.load(file)
+	info = json.load(file)
 
-marquee_config['grant_type'] = 'client_credentials'
-# marquee_config['scope'] = ''
+GsSession.use(Environment.PROD, '74d4f25c033e4bd7ad6909ca40f6ad8d', '15c2a007595b37787456949fd6bb35aa23c77b3495ffe449e2c7476f0d7e87f6', scopes=GsSession.Scopes.get_default())
 
-print(marquee_config)
+ds = Dataset('USCANFPP_MINI')
+data = ds.get_data(datetime.date(2017, 1, 15), datetime.date(2018, 1, 15), gsid=["75154", "193067", "194688", "902608", "85627"])
+# print(data.to_csv()) # peek at first few rows of data
+	
+data = data.values.tolist()
 
-_url = 'https://api.marquee.gs.com	/v1/data/dimensions/USCANFPP_MINI'
+sql_config = {}
 
-session = requests.Session()
+with open('sql_config.json', "r") as file:
+	sql_config = json.load(file)
 
-auth_request = session.post("https://idfs.gs.com/as/token.oauth2", data = marquee_config)
-access_token_dict = json.loads(auth_request.text)
-access_token = access_token_dict["access_token"]
+conn = mysql.connector.connect(**sql_config)
+cursor = conn.cursor()
 
-session.headers.update({"Authorization":"Bearer "+ access_token})
+def addrow(r):
+	str = "insert into csvdb (a, b, c, d, e, f)\n \
+	values(%s, %s, %s, %s, %s, %s)"
+	try:
+		cursor.execute(str, tuple(r))
+	except mysql.connector.Error as error:
+		print("db error:", error)
 
-request = session.get(url=_url)
-results = json.loads(request.text)
-
-print(results)
-
-print(requests.get(url = _url, params = marquee_config))
+for row in data:
+	addrow(row)
+	
+conn.commit()
+conn.close()
+cursor.close()
 
 '''
-table <generic>_users (
-    uname varchar(50),
-    pword varchar(50)
+table csvdb (
+	a varchar(50),
+	b varchar(50),
+	c varchar(50),
+	d varchar(50),
+	e varchar(50),
+	f varchar(50)
 )
 '''
