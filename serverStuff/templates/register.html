@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Registration</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/static/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/static/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/static/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<!--===============================================================================================-->
+
+<!-- Custom CSS -->
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+
+</head>
+<body>
+
+		<div class="container-login100" style="background-image: url('/static/images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<div class="limiter">
+		<div>
+			<button onclick = "investSelection()" type = "button" class = "left selected" id = "invest">Investor</button>
+			<button onclick = "compSelection()" type = "button" class = "right unselected" id = "comp">Company</button>
+		</div>
+		<br><br><br>
+				<!-- <form class="login100-form validate-form"> -->
+					<span class="login100-form-title p-b-49">
+						Register
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
+						<span class="label-input100">Username</span>
+						<input class="input100" id = "uname" type="text" name="username" placeholder="Type your username" required maxlength="200">
+						<span class = "focus-input100" data-symbol="&#xf206;"></span>
+					</div>
+					
+					<div class="wrap-input100 validate-input m-b-23" data-validate="Password is required">
+						<span class="label-input100">Password</span>
+						<input class="input100" id = "pword" type="password" name="pass" placeholder="Type your password" required maxlength="200">
+						<span class = "focus-input100" data-symbol="&#xf190;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-23 d-none" id = "compInput1" data-validate = "Company Name is required">
+						<span class="label-input100">Company Name</span>
+						<input class="input100" id = "bname" type="text" name="compName" placeholder="Type in Your Company Name" required maxlength="200">
+						<div class = "focus-input100">
+							<span data-symbol="&#xf190;"></span>
+						</div>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-23 d-none" id = "compInput2" data-validate="Company Description is required">
+						<span class="label-input100">Company Description</span>
+						<input class="input100" id = "bdesc" type="text" name="pass" placeholder="Please Type in Your Company Description" required maxlength="2000">
+						<div class = "focus-input100">
+							<span data-symbol="&#xf190;"></span>
+						</div>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-23 d-none" id = "compInput3" data-validate="Image URL is required">
+						<span class="label-input100">Image URL</span>
+						<input class="input100" id = "image"  type="text" name="pass" placeholder="Please Input your Image URL" required maxlength="200">
+						<div class = "focus-input100">
+							<span data-symbol="&#xf190;"></span>
+						</div>
+					</div>
+					
+					<div class="wrap-input100 validate-input m-b-23 d-none" id = "compInput4" data-validate="Proper Location is required">
+						<span class="label-input100">Location</span>
+						<input class="input100" id = "location" type="text" name="pass" placeholder="Input Location" required maxlength="200">
+						<div class = "focus-input100">
+							<span data-symbol="&#xf190;"></span>
+						</div>
+					</div>
+					
+					<div class="wrap-input100 validate-input m-b-23 d-none" id = "compInput5" data-validate="Proper Email is required">
+						<span class="label-input100">Email</span>
+						<input class="input100" id = "email" type="text" name="pass" placeholder="Input Email" required maxlength="200">
+						<div class = "focus-input100">
+							<span data-symbol="&#xf190;"></span>
+						</div>
+					</div>
+					
+					<div class="wrap-input100 validate-input m-b-23 d-none" id = "compInput6" data-validate="Proper Website is required">
+						<span class="label-input100">Website</span>
+						<input class="input100" id = "website" type="text" name="pass" placeholder="Input Website" required maxlength="200">
+						<div class = "focus-input100">
+							<span data-symbol="&#xf190;"></span>
+						</div>
+					</div>
+					
+					<div class="wrap-input100 validate-input m-b-23 d-none" id = "compInput7" data-validate="Image URL is required">
+						<span class="label-input100">Company Keywords</span>
+						<input class="input100" id = "bkeys" type="text" name="pass" placeholder="Separate Key Words with some &quot&#59&quot" required maxlength="200">
+						<div class = "focus-input100">
+							<span data-symbol="&#xf190;"></span>
+						</div>
+					</div>
+					
+					<div class="text-right p-t-8 p-b-31">
+						<a href="#">
+							<!-- Forgot Password -->
+						</a>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" id="god">
+								Register
+							</button>
+						</div>
+					</div>
+				<!-- </form> -->
+	
+<!--===============================================================================================-->
+	<script src="/static/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/vendor/bootstrap/js/popper.js"></script>
+	<script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/vendor/daterangepicker/moment.min.js"></script>
+	<script src="/static/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/js/main.js"></script>
+
+	
+<!-- Custom JS -->
+	<script src = "/static/js/script.js"></script>
+	<script>
+		function investSelection() {
+    var element = document.getElementById("invest");
+    element.classList.add("selected");
+    element = document.getElementById("comp");
+    element.classList.remove("selected");
+    var str = "compInput";
+    for(var i = 1; i < 8; i++) {
+        let temp = str + i;
+        element = document.getElementById(temp);
+        element.classList.add("d-none");
+    }
+    // element = document.getElementById(investInput1);
+    // element.classList.remove("d-none");
+}
+
+function compSelection() {
+    var element = document.getElementById("comp")
+    element.classList.add("selected"); 
+    element = document.getElementById("invest");
+    element.classList.remove("selected");
+    var str = "compInput";
+    for(var i = 1; i < 8; i++) {
+        let temp = str + i;
+        element = document.getElementById(temp);
+        element.classList.remove("d-none");
+    }
+//     element = document.getElementById(investInput1);
+//     element.classList.add("d-none");
+}
+
+// #define $ jQuery
+document.getElementById("god").onclick = function() {
+	info = {
+            'uname': document.getElementById("uname").value,
+            'pword': document.getElementById("pword").value,
+            'bname': document.getElementById("bname").value,
+            'bdesc': document.getElementById("bdesc").value,
+            'image': document.getElementById("image").value,
+            'location': document.getElementById("location").value,
+			'email': document.getElementById("email").value,
+			'website': document.getElementById("website").value,
+			'bkeys': document.getElementById("bkeys").value
+        };
+	console.log(info);
+    $.ajax({
+        method: 'POST',
+        url: '/register_business',
+        data: JSON.stringify(info),
+        success: thisValueWillBeNullBecauseThereIsNoDataReturnedFromTheServerInThisAJAXRequest => {
+            window.location.href = 'https://google.com';
+        }
+    });
+}
+
+static = []
+static.push('<div class="container"><div class="row"><div class="col-xs-12 col-sm-6 col-md-6"><div class="well well-sm"><div class="row"><div class="col-sm-6 col-md-4"><img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" /></div><div class="col-sm-6 col-md-8"><h4>')
+// name
+static.push('</h4><small><cite>')
+//location
+static.push('<i class="glyphicon glyphicon-map-marker"></i></cite></small><p><i class="glyphicon glyphicon-envelope"></i>')
+//email
+static.push('<br /><i class="glyphicon glyphicon-globe"></i><a href="');
+//website
+static.push('">')
+//website (again)
+static.push('</a></div></div></div></div></div></div>')
+
+function buildHTML(name, loc, email, website) {
+    str = static[0] + name + static[1] + loc + static[2] + email + 
+          static[3] + website + static[4] + website + static[5];
+    return str;
+}
+	</script>
+	
+</body>
+</html>

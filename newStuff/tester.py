@@ -1,18 +1,41 @@
+import json
+import requests
 # GS Quant documentation available at:
 # https://developer.gs.com/docs/gsquant/guides/getting-started/
 
-import datetime, json, csv, mysql.connector, requests
+import datetime, json, csv, mysql.connector
 
 from gs_quant.data import Dataset
 from gs_quant.session import GsSession, Environment
 
-GsSession.use(Environment.PROD, '74d4f25c03e4bd7ad6909ca40f6ad8d', '15c2a007595b37787456949fd6bb35aa23c77b3495ffe449e2c7476f0d7e87f6', scopes=GsSession.Scopes.get_default())
+GsSession.use(Environment.PROD, '48d117ad4e9045b8a4ae357972acf9dd', 'e14e42f89cb87deeb5eee6237ac7ebcb5bd935a9b27b838abcdf4307b326fe8d', scopes=GsSession.Scopes.get_default())
 
 ds = Dataset('USCANFPP_MINI')
 data = ds.get_data(datetime.date(2017, 1, 15), datetime.date(2018, 1, 15), gsid=["75154", "193067", "194688", "902608", "85627"])
 # print(data.to_csv()) # peek at first few rows of data
 	
 data = data.values.tolist()
+
+auth_data = {
+    'grant_type'    : 'client_credentials',
+    'client_id'     : '48d117ad4e9045b8a4ae357972acf9dd',
+    'client_secret' : 'e14e42f89cb87deeb5eee6237ac7ebcb5bd935a9b27b838abcdf4307b326fe8d',
+    'scope'         : 'read_product_data'
+};
+# create session instance
+session = requests.Session()
+gsid = "id"
+auth_request = session.post("https://idfs.gs.com/as/token.oauth2", data = auth_data)
+access_token_dict = json.loads(auth_request.text)
+access_token = access_token_dict["access_token"]
+
+# update session headers with access token
+session.headers.update({"Authorization":"Bearer "+ access_token})
+request_url0 = "https://api.marquee.qs.com/v2/assets/data?gsid=" + gsid
+
+request = session.get(url=request_url0)
+results = json.loads(request.text)
+print(results["results"][0]["classifications"]["gicsSector"])
 
 sql_config = {}
 
@@ -47,25 +70,4 @@ table csvdb (
 	f varchar(50)
 )
 '''
-
-auth_data = {
-    'grant_type'    : 'client_credentials',
-    'client_id'     : '74d4f25c033e4bd7ad6909ca40f6ad8d',
-    'client_secret' : '15c2a007595b37787456949fd6bb35aa23c77b3495ffe449e2c7476f0d7e87f6',
-    'scope'         : 'read_product_data'
-};
-# create session instance
-session = requests.Session()
-gsid = "10516"
-auth_request = session.post("https://idfs.gs.com/as/token.oauth2", data = auth_data)
-access_token_dict = json.loads(auth_request.text)
-access_token = access_token_dict["access_token"]
-
-# update session headers with access token
-session.headers.update({"Authorization":"Bearer "+ access_token})
-
-request_url = "https://api.marquee.gs.com/v1/assets/" + gsid
-
-request = session.get(url=request_url)
-results = json.loads(request.text)
-print(results)
+print(r)

@@ -1,0 +1,8 @@
+{
+	"user": "root", 
+	"password": "uhiajklji1426743naljd8qo2dq9hicodeforcesdoqu928ihqoid2uq8ioi",                       
+	"host": "localhost",
+	"database": "pennapps19F",
+	"raise_on_warnings": true,
+	"auth_plugin": "mysql_native_password"
+}
