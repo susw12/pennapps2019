@@ -1,19 +1,18 @@
 from flask import Flask, request, render_template, jsonify, json, redirect, url_for
 from werkzeug.utils import secure_filename
-import os, sys, random, json, requests, datetime, csv, time, intrinio_sdk, numpy as np, pandas as pd
+import os, sys, random, json, requests, datetime, csv, time, numpy as np, pandas as pd
 from json import dumps
 import mysql.connector #pip install mysql-connector
 
 from gs_quant.data import Dataset
 from gs_quant.session import GsSession, Environment
 
-from intrinio_sdk.rest import ApiException
 from pprint import pprint, pformat
 
 from gensim.summarization import keywords
 
-# import nltk
-# nltk.download('vader_lexicon')
+import nltk
+nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as SIA
 #boilerpipe
 app = Flask(__name__)
@@ -413,7 +412,7 @@ def page2_info():
 	for item in a:
 		item = boil_the_text(item)
 		sum += get_sentiment(item)
-		cnt++
+		cnt += 1
 	
 	avg = sum / cnt
 	
@@ -489,7 +488,7 @@ def get_map():
 	
 states = {"AL":"Alabama","AK":"Alaska","AZ":"Arizona","AR":"Arkansas","CA":"California","CO":"Colorado","CT":"Connecticut","DE":"Delaware","FL":"Florida","GA":"Georgia","HI":"Hawaii","ID":"Idaho","IL":"Illinois","IN":"Indiana","IA":"Iowa","KS":"Kansas","KY":"Kentucky","LA":"Louisiana","ME":"Maine","MD":"Maryland","MA":"Massachusetts","MI":"Michigan","MN":"Minnesota","MS":"Mississippi","MO":"Missouri","MT":"Montana","NE":"Nebraska","NV":"Nevada","NH":"New Hampshire","NJ":"New Jersey","NM":"New Mexico","NY":"New York","NC":"North Carolina","ND":"North Dakota","OH":"Ohio","OK":"Oklahoma","OR":"Oregon","PA":"Pennsylvania","RI":"Rhode Island","SC":"South Carolina","SD":"South Dakota","TN":"Tennessee","TX":"Texas","UT":"Utah","VT":"Vermont","VA":"Virginia","WA":"Washington","WV":"West Virginia","WI":"Wisconsin","WY":"Wyoming"}
 
-app.run(debug=True)
+app.run(debug=True, port=8081, host='0.0.0.0')
 '''
 table <generic>_users (
 	uname varchar(200),
