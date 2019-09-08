@@ -1,57 +1,10 @@
-# GS Quant documentation available at:
-# https://developer.gs.com/docs/gsquant/guides/getting-started/
-
-import datetime, json, csv, mysql.connector, requests
-
-from gs_quant.data import Dataset
-from gs_quant.session import GsSession, Environment
-
-GsSession.use(Environment.PROD, '74d4f25c03e4bd7ad6909ca40f6ad8d', '15c2a007595b37787456949fd6bb35aa23c77b3495ffe449e2c7476f0d7e87f6', scopes=GsSession.Scopes.get_default())
-
-ds = Dataset('USCANFPP_MINI')
-data = ds.get_data(datetime.date(2017, 1, 15), datetime.date(2018, 1, 15), gsid=["75154", "193067", "194688", "902608", "85627"])
-# print(data.to_csv()) # peek at first few rows of data
-	
-data = data.values.tolist()
-
-sql_config = {}
-
-with open('sql_config.json', "r") as file:
-	sql_config = json.load(file)
-
-conn = mysql.connector.connect(**sql_config)
-cursor = conn.cursor()
-
-def addrow(r):
-	str = "insert into csvdb (a, b, c, d, e, f)\n \
-	values(%s, %s, %s, %s, %s, %s)"
-	try:
-		cursor.execute(str, tuple(r))
-	except mysql.connector.Error as error:
-		print("db error:", error)
-
-for row in data:
-	addrow(row)
-	
-conn.commit()
-conn.close()
-cursor.close()
-
-'''
-table csvdb (
-	a varchar(50),
-	b varchar(50),
-	c varchar(50),
-	d varchar(50),
-	e varchar(50),
-	f varchar(50)
-)
-'''
+import requests
+import json
 
 auth_data = {
     'grant_type'    : 'client_credentials',
-    'client_id'     : '74d4f25c033e4bd7ad6909ca40f6ad8d',
-    'client_secret' : '15c2a007595b37787456949fd6bb35aa23c77b3495ffe449e2c7476f0d7e87f6',
+    'client_id'     : '2000765fd60031b9c843944bdb1ffa354be71141cdc5fab7',
+    'client_secret' : '026449ec24a8e9be94b9dc96ee1e326c0774763b7f23d73ebe766c8b89dbcfb3',
     'scope'         : 'read_product_data'
 };
 # create session instance
@@ -59,12 +12,12 @@ session = requests.Session()
 gsid = "10516"
 auth_request = session.post("https://idfs.gs.com/as/token.oauth2", data = auth_data)
 access_token_dict = json.loads(auth_request.text)
-access_token = access_token_dict["access_token"]
+access_token = access_token_dict['access_token']
 
 # update session headers with access token
 session.headers.update({"Authorization":"Bearer "+ access_token})
 
-request_url = "https://api.marquee.gs.com/v1/assets/" + gsid
+request_url = "https://api.marquee.gs.com/v1/assets/gsid=" + gsid
 
 request = session.get(url=request_url)
 results = json.loads(request.text)
