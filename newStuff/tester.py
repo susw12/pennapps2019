@@ -8,7 +8,7 @@ import datetime, json, csv, mysql.connector
 from gs_quant.data import Dataset
 from gs_quant.session import GsSession, Environment
 
-GsSession.use(Environment.PROD, '48d117ad4e9045b8a4ae357972acf9dd', 'e14e42f89cb87deeb5eee6237ac7ebcb5bd935a9b27b838abcdf4307b326fe8d', scopes=GsSession.Scopes.get_default())
+GsSession.use(Environment.PROD, '74d4f25c033e4bd7ad6909ca40f6ad8d', 'd698e64f7c7d549225be2b2e4b1048e6e74aa2e7469d9ec37aae3bf98d7c9abc', scopes=GsSession.Scopes.get_default())
 
 ds = Dataset('USCANFPP_MINI')
 data = ds.get_data(datetime.date(2017, 1, 15), datetime.date(2018, 1, 15), gsid=["75154", "193067", "194688", "902608", "85627"])
@@ -18,8 +18,8 @@ data = data.values.tolist()
 
 auth_data = {
     'grant_type'    : 'client_credentials',
-    'client_id'     : '48d117ad4e9045b8a4ae357972acf9dd',
-    'client_secret' : 'e14e42f89cb87deeb5eee6237ac7ebcb5bd935a9b27b838abcdf4307b326fe8d',
+    'client_id'     : '74d4f25c033e4bd7ad6909ca40f6ad8d',
+    'client_secret' : 'd698e64f7c7d549225be2b2e4b1048e6e74aa2e7469d9ec37aae3bf98d7c9abc',
     'scope'         : 'read_product_data'
 };
 # create session instance
